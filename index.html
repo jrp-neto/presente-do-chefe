@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cartão Natal Luz — Vale Pix</title>
+  <style>
+    body{
+      margin:0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg,#8b0000,#300000);
+      color:white;
+      text-align:center;
+      padding:40px 20px;
+    }
+    .card{
+      max-width:750px;
+      margin:0 auto;
+      background:rgba(255,255,255,0.1);
+      border-radius:18px;
+      padding:32px;
+      box-shadow:0 0 25px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+    }
+    h1{
+      margin-top:0;
+      font-size:32px;
+      color:#ffe9a8;
+      text-shadow:0 0 6px #ffdf6b;
+    }
+    .photo{
+      width:260px;
+      height:260px;
+      border-radius:14px;
+      overflow:hidden;
+      margin:0 auto 20px;
+      box-shadow:0 0 15px rgba(255,255,255,0.4);
+    }
+    .photo img{width:100%;height:100%;object-fit:cover;}
+    .msg{
+      margin-top:20px;
+      font-size:18px;
+      line-height:1.6;
+      color:#fff3d6;
+    }
+    .contributors{
+      margin-top:30px;
+      font-size:18px;
+      background:rgba(255,255,255,0.12);
+      padding:20px;
+      border-radius:12px;
+    }
+    .contributors h3{
+      margin-top:0;
+      color:#ffe9a8;
+      text-shadow:0 0 6px #ffdf6b;
+    }
+      /* Snow Canvas */
+    #snow{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index:999;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Natal Luz da Tutoria Max</h1>
+
+    <!-- FOTO DO CHEFE → SUBSTITUIR O SRC DIRETAMENTE NO HTML -->
+    <div class="photo">
+      <img src="1.png" alt="Foto do Chefe">
+    </div>
+
+    <div class="msg">
+      <p>Querido Chefe,</p>
+      <p>
+        Neste clima mágico do <strong>Natal Luz</strong>, nós — sua equipe — nos unimos para demonstrar
+        toda nossa gratidão, carinho e reconhecimento pelo ano de trabalho, liderança e parceria.
+      </p>
+      <p>
+        Como forma de agradecimento, preparamos com carinho um <strong>vale PIX especial</strong> para você.
+        Que este presente traga alegria e ilumine ainda mais este final de ano.
+      </p>
+      <p>
+        Que a magia do Natal encha sua vida de paz, luz e felicidades.
+        Muito obrigado por tudo que fez e continua fazendo por nós.
+      </p>
+      <p><strong>Feliz Natal e um próspero Ano Novo!</strong> 🎄✨</p>
+    </div>
+
+    <div class="contributors">
+      <h3>Da sua querida equipe:</h3>
+      <p>
+        Adriana Ferreira Da Silva<br>
+        Aline Christyr Francelino Alves<br>
+        Ana Carolina Cabral De Santana<br>
+        Ana Clara Dos Santos Pereira<br>
+        Ana Priscila De Santana<br>
+        Danieli Raiane Lima Da Silva<br>
+        Dimas Diego Ferreira De Melo<br>
+        Edlaine Do Nascimento Matias<br>
+        Emmanuel Lacerda Leocadio Da Silva<br>
+        Igor Felipe Santiago Da Silva<br>
+        Isabela De Barros Godoi Maranhão<br>
+        Jonatan Ribeiro De Souza Melo<br>
+        José Juan Gomes Da Silva<br>
+        José Ribeiro Pessoa Neto<br>
+        Julia Rodrigues Da Silva<br>
+        Julianne Ferreira De Mendonça<br>
+        Luis Felipe Farias Nunes<br>
+        Manuela Martins Alves Gomes<br>
+        Maria Das Graças Freitas Bezerra<br>
+        Nathália Ingrid Morais Dos Santos<br>
+        Olga De Lira Soares Ribeiro<br>
+        Pamella Katarina Moreira Lira<br>
+        <!-- Paulo Ícaro De Sales Freitas<br> -->
+        Pedro Henrique Fernandes Neves<br>
+        <!-- Raphael Barroso Pires Ferreira<br> -->
+        Rodrigo Do Rêgo Barros De Castro<br>
+        Thaismânia Cilene Da Silva Cavalcanti<br>
+        Thalita Manoela Sousa Da Cunha<br>
+        Vanessa De Oliveira Gonçalves
+      </p>
+    </div>
+  </div>
+  <canvas id="snow"></canvas>
+
+</body>
+  <script>
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const flakes = [];
+    const total = 120;
+
+    for(let i=0;i<total;i++){
+      flakes.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*3 + 1,
+        d: Math.random()*1 + 0.5
+      });
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.beginPath();
+      flakes.forEach(f => {
+        ctx.moveTo(f.x,f.y);
+        ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+      });
+      ctx.fill();
+      update();
+      requestAnimationFrame(draw);
+    }
+
+    function update(){
+      flakes.forEach(f => {
+        f.y += Math.pow(f.d,1.5) + 0.3;
+        f.x += Math.sin(f.y * 0.01) * 0.6;
+        if(f.y > canvas.height){
+          f.y = -10;
+          f.x = Math.random()*canvas.width;
+        }
+      });
+    }
+
+    draw();
+  </script>
+</html>
